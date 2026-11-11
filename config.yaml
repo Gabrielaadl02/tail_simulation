@@ -1,0 +1,128 @@
+# Tail model parameters.
+# Edit this file, then run generate_mjcf.py (viewer.py regenerates automatically).
+#
+# Units: metres, kilograms, kg*m^2, degrees, newtons.
+# PLACEHOLDER   = a guess, replace it with your CAD / measured value.
+# FROM DRAWING  = rough value scaled off the undimensioned 1:1 PDF drawings (+/-10%),
+#                 replace it with the real CAD dimension.
+#
+# Frame convention: the tail points along +x, gravity is -z.
+#
+# Each universal joint is a ring (Part 5) between two vertebrae (Part 8):
+#   previous link --pitch hinge (y)--> ring --yaw hinge (z)--> next link
+# Both hinges pass through the ring centre. Each vertebra's body origin is at
+# its rear joint centre; its front joint centre is at x = spacing.
+
+n_vertebrae: 8                      # PLACEHOLDER  identical vertebrae (the tip is extra)
+spacing: 0.050                      # from vert.stl  joint centre -> next joint centre [m]
+hole_radius: 0.030                  # from ring.stl  tendon holes in the ring, distance from axis [m]
+tendon_angles_deg: [45, 135, 225, 315]  # hole angle around the axis: 0 = +y, 90 = +z
+                                    #   ring holes sit between the pin holes (0/90/180/270), so:
+                                    #   t0 = top/+y  t1 = top/-y  t2 = bottom/-y  t3 = bottom/+y
+
+mesh_dir: meshes                    # folder with the STL files (relative to this file)
+mesh_scale: 0.001                   # Onshape STL is in mm
+
+joint:
+  pitch_range_deg: 15               # PLACEHOLDER  +/- limit, replaces vertebra-ring collision
+  yaw_range_deg: 15                 # PLACEHOLDER
+  # Losses. With both at 0 the tail never stops swinging under tension.
+  damping: 1.0e-3                   # viscous, N*m*s/rad per hinge. Stand-in for bearing + tendon
+                                    #   losses; 1e-3 settles the tail in ~15 s. 0 = ideal frictionless.
+  frictionloss: 0.0                 # PLACEHOLDER  dry friction per hinge [N*m]: constant torque
+                                    #   opposing motion (tendon rubbing in the ring holes). Makes the
+                                    #   tail stick slightly. Measure it: the tension at which a joint
+                                    #   starts to move x hole_radius ~ friction torque.
+  # Tension-dependent friction: tendon tension squeezes every joint, so the
+  # friction torque at each hinge = frictionloss + friction_per_newton * (T0+T1+T2+T3).
+  # Pull all tendons hard -> joints lock where they are.
+  # Units: N*m per N  (= effective friction coefficient x radius it acts at).
+  # PLACEHOLDER 0.01 is chosen so the effect is visible: holding this tail straight
+  # out needs 0.28 N*m at the base joint, i.e. 28 N total tension at 0.01.
+  # Plain pin friction (mu ~0.3 on a ~1.5 mm pin) would only be ~0.0005.
+  # Measure it: with all tendons at T each, the torque that just makes a joint
+  # slip, divided by 4*T.
+  friction_per_newton: 0.01
+  # Stiffness of the "stuck" state (a lock that holds a joint while friction can).
+  # Stiffer = less overshoot when it catches. Keep the time constant >= 2 * sim.timestep.
+  stick_solref: [0.001, 1.0]
+  stick_solimp: [0.99, 0.999, 0.001]
+  armature: 0.0
+  # Stiffness of the joint-limit "hard stop". MuJoCo limits are soft; the defaults
+  # (0.02 s, 0.9-0.95) let these light parts overshoot by >15 deg. Keep the
+  # time constant >= 2 * sim.timestep.
+  limit_solref: [0.002, 1.0]        # [time constant s, damping ratio]
+  limit_solimp: [0.95, 0.99, 0.001] # [d0, dwidth, width]
+
+base:                               # fixed part; the F/T sensor sits at its origin
+  mass: 0.10                        # PLACEHOLDER  base mass is INCLUDED in the F/T reading
+  com: [-0.005, 0, 0]               # PLACEHOLDER
+  inertia: [6.0e-5, 4.3e-5, 4.3e-5] # PLACEHOLDER
+  box_pos: [-0.005, 0, 0]           # placeholder box drawn for the base (visual only)
+  box_half_size: [0.016, 0.035, 0.035]
+  joint_x: 0.025                    # PLACEHOLDER  F/T point -> first joint (ring) centre [m]
+  hole_x: [0.011]                   # PLACEHOLDER  x of the tendon anchor holes in the base frame
+
+ring:                               # Part 5 - universal-joint ring with the tendon holes
+  mesh: ring.stl                    # already centred, axis along x, pins along y/z: no transform
+  mesh_pos: [0, 0, 0]
+  mesh_euler_deg: [0, 0, 0]
+  mass: 0.01171223                  # measured (Part 5)
+  com: [0, 0, 0]                    # from ring.stl
+  inertia: [1.048e-5, 5.339e-6, 5.339e-6]  # from ring.stl at the measured mass (mesh_props.py)
+  outer_radius: 0.0325              # from ring.stl (only used if the STL is missing)
+  thickness: 0.010                  # from ring.stl
+  hole_x: [-0.005, 0.005]           # tendon enters / leaves the ring at its two faces
+
+vertebra:                           # Part 8 - double fork, no tendon holes
+  mesh: vert.stl
+  # vert.stl runs from its z-pinned fork at x=0 to its y-pinned fork at x=-50 mm.
+  # Turning it 180 deg about z puts the z-fork at the rear joint (body origin)
+  # and the y-fork at the front joint (x = +spacing).
+  mesh_pos: [0, 0, 0]
+  mesh_euler_deg: [0, 0, 180]
+  mass: 0.00979571                  # measured (Part 8)
+  com: [0.025, 0, 0]                # from vert.stl
+  # About the COM, in body axes. 3 values = diagonal, 6 values = Ixx Iyy Izz Ixy Ixz Iyz.
+  inertia: [2.57e-6, 3.089e-6, 3.089e-6]  # from vert.stl at the measured mass (mesh_props.py)
+  hole_x: []                        # the tendons only pass through the rings
+
+lock_end_ring: false                # false (= real tail now): the end ring hangs on one pin
+                                    #   axis and can tip up/down; only the cables hold it.
+                                    # true: end ring fixed to the last vertebra (what-if).
+lock_first_ring: true               # first ring fixed to the base (no v1_pitch hinge);
+                                    #   v1 can still yaw on it
+end_with: ring                     # 'ring': the last ring is the tip, pinned to the last
+                                    #   vertebra's front fork; tendons tied off in its holes.
+                                    # 'tip': add the tip part below instead (needs tip.stl).
+
+tip:                                # only used when end_with: tip
+  mesh: tip.stl
+  mesh_pos: [0, 0, 0]               # PLACEHOLDER
+  mesh_euler_deg: [0, 0, 0]         # PLACEHOLDER
+  mass: 0.008                       # PLACEHOLDER
+  com: [0.012, 0, 0]                # PLACEHOLDER
+  inertia: [2.0e-6, 1.5e-6, 1.5e-6] # PLACEHOLDER
+  length: 0.030                     # PLACEHOLDER  used for the placeholder shape and tip marker
+  hole_x: [0.012]                   # PLACEHOLDER  where the tendons terminate in the tip
+
+drive: length                       # how the motors drive the tendons:
+                                    #   length:  each motor sets how much cable it has reeled in
+                                    #            (mm, from the straight tail). Cables pull only,
+                                    #            can go slack, and the tension is measured.
+                                    #   tension: each motor applies a set force (N).
+
+tendon:
+  max_tension: 20.0                 # PLACEHOLDER  max cable tension [N]: tension-drive command
+                                    #   range, and where a length-driven motor stalls
+  max_reel_mm: 40.0                 # length drive: command range -this..+this [mm]
+  # Length drive: the spool motor + cable act like a stiff spring toward the
+  # commanded length (pull only). Real values: cable stretch + servo stiffness.
+  cable_stiffness: 5000.0           # PLACEHOLDER  [N/m]  -> 1 mm reeled in on a taut cable ~ 5 N
+  cable_damping: 20.0               # PLACEHOLDER  [N*s/m]
+  width: 0.0015                     # drawing width only (thick enough to see the colours)
+
+sim:
+  timestep: 0.0005                  # [s]
+  gravity: [0, 0, -9.81]
+  base_pos: [0, 0, 0.4]             # where the base sits in the world

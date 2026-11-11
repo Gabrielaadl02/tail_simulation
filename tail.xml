@@ -1,0 +1,302 @@
+<mujoco model="tendon_tail">
+  <compiler angle="radian" inertiafromgeom="false" meshdir="meshes" />
+  <option timestep="0.0005" gravity="0 0 -9.81" integrator="implicitfast" />
+  <statistic center="0.2125 0 0.4" extent="0.425" />
+  <asset>
+    <mesh name="vertebra_mesh" file="vert.stl" scale="0.001 0.001 0.001" />
+    <mesh name="ring_mesh" file="ring.stl" scale="0.001 0.001 0.001" />
+  </asset>
+  <worldbody>
+    <light pos="0 0 2" dir="0 0 -1" directional="true" />
+    <geom name="floor" type="plane" size="1 1 0.01" rgba="0.9 0.9 0.9 1" contype="0" conaffinity="0" />
+    <body name="base" pos="0 0 0.4">
+      <inertial pos="-0.005 0 0" mass="0.1" diaginertia="6e-05 4.3e-05 4.3e-05" />
+      <geom type="box" pos="-0.005 0 0" size="0.016 0.035 0.035" rgba="0.35 0.35 0.40 1" contype="0" conaffinity="0" />
+      <site name="base_ft" pos="0 0 0" size="0.004" rgba="0 0.6 1 1" />
+      <site name="base_hole0_0" pos="0.011 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+      <site name="base_hole1_0" pos="0.011 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+      <site name="base_hole2_0" pos="0.011 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+      <site name="base_hole3_0" pos="0.011 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+      <body name="ring_v1" pos="0.025 0 0">
+        <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+        <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+        <site name="ring_v1_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+        <site name="ring_v1_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+        <site name="ring_v1_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+        <site name="ring_v1_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+        <site name="ring_v1_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+        <site name="ring_v1_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+        <site name="ring_v1_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+        <site name="ring_v1_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+        <body name="v1" pos="0 0 0">
+          <joint name="v1_yaw" type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+          <inertial pos="0.025 0 0" mass="0.00979571" diaginertia="2.57e-06 3.089e-06 3.089e-06" />
+          <geom type="mesh" mesh="vertebra_mesh" pos="0 0 0" euler="0 0 3.14159" contype="0" conaffinity="0" rgba="0.85 0.85 0.80 1" />
+          <body name="ring_v2" pos="0.05 0 0">
+            <joint name="v2_pitch" type="hinge" pos="0 0 0" axis="0 1 0" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+            <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+            <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+            <site name="ring_v2_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+            <site name="ring_v2_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+            <site name="ring_v2_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+            <site name="ring_v2_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+            <site name="ring_v2_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+            <site name="ring_v2_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+            <site name="ring_v2_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+            <site name="ring_v2_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+            <body name="v2" pos="0 0 0">
+              <joint name="v2_yaw" type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+              <inertial pos="0.025 0 0" mass="0.00979571" diaginertia="2.57e-06 3.089e-06 3.089e-06" />
+              <geom type="mesh" mesh="vertebra_mesh" pos="0 0 0" euler="0 0 3.14159" contype="0" conaffinity="0" rgba="0.85 0.85 0.80 1" />
+              <body name="ring_v3" pos="0.05 0 0">
+                <joint name="v3_pitch" type="hinge" pos="0 0 0" axis="0 1 0" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+                <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+                <site name="ring_v3_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                <site name="ring_v3_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                <site name="ring_v3_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                <site name="ring_v3_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                <site name="ring_v3_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                <site name="ring_v3_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                <site name="ring_v3_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                <site name="ring_v3_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                <body name="v3" pos="0 0 0">
+                  <joint name="v3_yaw" type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                  <inertial pos="0.025 0 0" mass="0.00979571" diaginertia="2.57e-06 3.089e-06 3.089e-06" />
+                  <geom type="mesh" mesh="vertebra_mesh" pos="0 0 0" euler="0 0 3.14159" contype="0" conaffinity="0" rgba="0.85 0.85 0.80 1" />
+                  <body name="ring_v4" pos="0.05 0 0">
+                    <joint name="v4_pitch" type="hinge" pos="0 0 0" axis="0 1 0" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                    <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+                    <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+                    <site name="ring_v4_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                    <site name="ring_v4_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                    <site name="ring_v4_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                    <site name="ring_v4_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                    <site name="ring_v4_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                    <site name="ring_v4_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                    <site name="ring_v4_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                    <site name="ring_v4_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                    <body name="v4" pos="0 0 0">
+                      <joint name="v4_yaw" type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                      <inertial pos="0.025 0 0" mass="0.00979571" diaginertia="2.57e-06 3.089e-06 3.089e-06" />
+                      <geom type="mesh" mesh="vertebra_mesh" pos="0 0 0" euler="0 0 3.14159" contype="0" conaffinity="0" rgba="0.85 0.85 0.80 1" />
+                      <body name="ring_v5" pos="0.05 0 0">
+                        <joint name="v5_pitch" type="hinge" pos="0 0 0" axis="0 1 0" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                        <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+                        <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+                        <site name="ring_v5_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                        <site name="ring_v5_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                        <site name="ring_v5_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                        <site name="ring_v5_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                        <site name="ring_v5_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                        <site name="ring_v5_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                        <site name="ring_v5_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                        <site name="ring_v5_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                        <body name="v5" pos="0 0 0">
+                          <joint name="v5_yaw" type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                          <inertial pos="0.025 0 0" mass="0.00979571" diaginertia="2.57e-06 3.089e-06 3.089e-06" />
+                          <geom type="mesh" mesh="vertebra_mesh" pos="0 0 0" euler="0 0 3.14159" contype="0" conaffinity="0" rgba="0.85 0.85 0.80 1" />
+                          <body name="ring_v6" pos="0.05 0 0">
+                            <joint name="v6_pitch" type="hinge" pos="0 0 0" axis="0 1 0" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                            <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+                            <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+                            <site name="ring_v6_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                            <site name="ring_v6_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                            <site name="ring_v6_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                            <site name="ring_v6_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                            <site name="ring_v6_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                            <site name="ring_v6_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                            <site name="ring_v6_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                            <site name="ring_v6_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                            <body name="v6" pos="0 0 0">
+                              <joint name="v6_yaw" type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                              <inertial pos="0.025 0 0" mass="0.00979571" diaginertia="2.57e-06 3.089e-06 3.089e-06" />
+                              <geom type="mesh" mesh="vertebra_mesh" pos="0 0 0" euler="0 0 3.14159" contype="0" conaffinity="0" rgba="0.85 0.85 0.80 1" />
+                              <body name="ring_v7" pos="0.05 0 0">
+                                <joint name="v7_pitch" type="hinge" pos="0 0 0" axis="0 1 0" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                                <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+                                <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+                                <site name="ring_v7_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                <site name="ring_v7_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                <site name="ring_v7_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                <site name="ring_v7_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                <site name="ring_v7_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                <site name="ring_v7_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                <site name="ring_v7_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                <site name="ring_v7_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                <body name="v7" pos="0 0 0">
+                                  <joint name="v7_yaw" type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                                  <inertial pos="0.025 0 0" mass="0.00979571" diaginertia="2.57e-06 3.089e-06 3.089e-06" />
+                                  <geom type="mesh" mesh="vertebra_mesh" pos="0 0 0" euler="0 0 3.14159" contype="0" conaffinity="0" rgba="0.85 0.85 0.80 1" />
+                                  <body name="ring_v8" pos="0.05 0 0">
+                                    <joint name="v8_pitch" type="hinge" pos="0 0 0" axis="0 1 0" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                                    <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+                                    <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+                                    <site name="ring_v8_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                    <site name="ring_v8_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                    <site name="ring_v8_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                    <site name="ring_v8_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                    <site name="ring_v8_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                    <site name="ring_v8_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                    <site name="ring_v8_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                    <site name="ring_v8_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                    <body name="v8" pos="0 0 0">
+                                      <joint name="v8_yaw" type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                                      <inertial pos="0.025 0 0" mass="0.00979571" diaginertia="2.57e-06 3.089e-06 3.089e-06" />
+                                      <geom type="mesh" mesh="vertebra_mesh" pos="0 0 0" euler="0 0 3.14159" contype="0" conaffinity="0" rgba="0.85 0.85 0.80 1" />
+                                      <body name="ring_end" pos="0.05 0 0">
+                                        <joint name="end_pitch" type="hinge" pos="0 0 0" axis="0 1 0" limited="true" range="-0.261799 0.261799" damping="0.001" armature="0" frictionloss="0" solreflimit="0.002 1" solimplimit="0.95 0.99 0.001" />
+                                        <inertial pos="0 0 0" mass="0.0117122" diaginertia="1.048e-05 5.339e-06 5.339e-06" />
+                                        <geom type="mesh" mesh="ring_mesh" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0" rgba="0.4 0.6 0.9 0.5" />
+                                        <site name="ring_end_hole0_0" pos="-0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                        <site name="ring_end_hole0_1" pos="0.005 0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                        <site name="ring_end_hole1_0" pos="-0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                        <site name="ring_end_hole1_1" pos="0.005 -0.0212132 0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                        <site name="ring_end_hole2_0" pos="-0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                        <site name="ring_end_hole2_1" pos="0.005 -0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                        <site name="ring_end_hole3_0" pos="-0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                        <site name="ring_end_hole3_1" pos="0.005 0.0212132 -0.0212132" size="0.001" rgba="1.0 0.6 0.0 1" />
+                                        <site name="tip_end" pos="0 0 0" size="0.003" rgba="0 0.8 0 1" />
+                                      </body>
+                                    </body>
+                                  </body>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <tendon>
+    <spatial name="t0" width="0.0015" rgba="0.164706 0.470588 0.839216 1">
+      <site site="base_hole0_0" />
+      <site site="ring_v1_hole0_0" />
+      <site site="ring_v1_hole0_1" />
+      <site site="ring_v2_hole0_0" />
+      <site site="ring_v2_hole0_1" />
+      <site site="ring_v3_hole0_0" />
+      <site site="ring_v3_hole0_1" />
+      <site site="ring_v4_hole0_0" />
+      <site site="ring_v4_hole0_1" />
+      <site site="ring_v5_hole0_0" />
+      <site site="ring_v5_hole0_1" />
+      <site site="ring_v6_hole0_0" />
+      <site site="ring_v6_hole0_1" />
+      <site site="ring_v7_hole0_0" />
+      <site site="ring_v7_hole0_1" />
+      <site site="ring_v8_hole0_0" />
+      <site site="ring_v8_hole0_1" />
+      <site site="ring_end_hole0_0" />
+      <site site="ring_end_hole0_1" />
+    </spatial>
+    <spatial name="t1" width="0.0015" rgba="0.921569 0.407843 0.203922 1">
+      <site site="base_hole1_0" />
+      <site site="ring_v1_hole1_0" />
+      <site site="ring_v1_hole1_1" />
+      <site site="ring_v2_hole1_0" />
+      <site site="ring_v2_hole1_1" />
+      <site site="ring_v3_hole1_0" />
+      <site site="ring_v3_hole1_1" />
+      <site site="ring_v4_hole1_0" />
+      <site site="ring_v4_hole1_1" />
+      <site site="ring_v5_hole1_0" />
+      <site site="ring_v5_hole1_1" />
+      <site site="ring_v6_hole1_0" />
+      <site site="ring_v6_hole1_1" />
+      <site site="ring_v7_hole1_0" />
+      <site site="ring_v7_hole1_1" />
+      <site site="ring_v8_hole1_0" />
+      <site site="ring_v8_hole1_1" />
+      <site site="ring_end_hole1_0" />
+      <site site="ring_end_hole1_1" />
+    </spatial>
+    <spatial name="t2" width="0.0015" rgba="0.105882 0.686275 0.478431 1">
+      <site site="base_hole2_0" />
+      <site site="ring_v1_hole2_0" />
+      <site site="ring_v1_hole2_1" />
+      <site site="ring_v2_hole2_0" />
+      <site site="ring_v2_hole2_1" />
+      <site site="ring_v3_hole2_0" />
+      <site site="ring_v3_hole2_1" />
+      <site site="ring_v4_hole2_0" />
+      <site site="ring_v4_hole2_1" />
+      <site site="ring_v5_hole2_0" />
+      <site site="ring_v5_hole2_1" />
+      <site site="ring_v6_hole2_0" />
+      <site site="ring_v6_hole2_1" />
+      <site site="ring_v7_hole2_0" />
+      <site site="ring_v7_hole2_1" />
+      <site site="ring_v8_hole2_0" />
+      <site site="ring_v8_hole2_1" />
+      <site site="ring_end_hole2_0" />
+      <site site="ring_end_hole2_1" />
+    </spatial>
+    <spatial name="t3" width="0.0015" rgba="0.929412 0.631373 0 1">
+      <site site="base_hole3_0" />
+      <site site="ring_v1_hole3_0" />
+      <site site="ring_v1_hole3_1" />
+      <site site="ring_v2_hole3_0" />
+      <site site="ring_v2_hole3_1" />
+      <site site="ring_v3_hole3_0" />
+      <site site="ring_v3_hole3_1" />
+      <site site="ring_v4_hole3_0" />
+      <site site="ring_v4_hole3_1" />
+      <site site="ring_v5_hole3_0" />
+      <site site="ring_v5_hole3_1" />
+      <site site="ring_v6_hole3_0" />
+      <site site="ring_v6_hole3_1" />
+      <site site="ring_v7_hole3_0" />
+      <site site="ring_v7_hole3_1" />
+      <site site="ring_v8_hole3_0" />
+      <site site="ring_v8_hole3_1" />
+      <site site="ring_end_hole3_0" />
+      <site site="ring_end_hole3_1" />
+    </spatial>
+  </tendon>
+  <actuator>
+    <general name="L0" tendon="t0" ctrllimited="true" ctrlrange="-40 40" forcelimited="true" forcerange="-20 0" gaintype="fixed" gainprm="-5" biastype="affine" biasprm="2095 -5000 -20" />
+    <general name="L1" tendon="t1" ctrllimited="true" ctrlrange="-40 40" forcelimited="true" forcerange="-20 0" gaintype="fixed" gainprm="-5" biastype="affine" biasprm="2095 -5000 -20" />
+    <general name="L2" tendon="t2" ctrllimited="true" ctrlrange="-40 40" forcelimited="true" forcerange="-20 0" gaintype="fixed" gainprm="-5" biastype="affine" biasprm="2095 -5000 -20" />
+    <general name="L3" tendon="t3" ctrllimited="true" ctrlrange="-40 40" forcelimited="true" forcerange="-20 0" gaintype="fixed" gainprm="-5" biastype="affine" biasprm="2095 -5000 -20" />
+  </actuator>
+  <equality>
+    <joint name="lock_v1_yaw" joint1="v1_yaw" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v2_pitch" joint1="v2_pitch" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v2_yaw" joint1="v2_yaw" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v3_pitch" joint1="v3_pitch" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v3_yaw" joint1="v3_yaw" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v4_pitch" joint1="v4_pitch" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v4_yaw" joint1="v4_yaw" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v5_pitch" joint1="v5_pitch" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v5_yaw" joint1="v5_yaw" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v6_pitch" joint1="v6_pitch" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v6_yaw" joint1="v6_yaw" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v7_pitch" joint1="v7_pitch" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v7_yaw" joint1="v7_yaw" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v8_pitch" joint1="v8_pitch" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_v8_yaw" joint1="v8_yaw" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+    <joint name="lock_end_pitch" joint1="end_pitch" polycoef="0 0 0 0 0" active="false" solref="0.001 1" solimp="0.99 0.999 0.001" />
+  </equality>
+  <custom>
+    <numeric name="friction_per_newton" data="0.01" />
+    <numeric name="drive_length" data="1" />
+  </custom>
+  <sensor>
+    <force name="base_force" site="base_ft" />
+    <torque name="base_torque" site="base_ft" />
+    <framepos name="tip_pos" objtype="site" objname="tip_end" />
+    <tendonpos name="t0_length" tendon="t0" />
+    <tendonpos name="t1_length" tendon="t1" />
+    <tendonpos name="t2_length" tendon="t2" />
+    <tendonpos name="t3_length" tendon="t3" />
+  </sensor>
+</mujoco>
