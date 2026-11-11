@@ -1,4 +1,19 @@
+# Python
 .venv/
+venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+
+# MuJoCo
 MUJOCO_LOG.TXT
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Claude Code per-machine settings
+.claude/settings.local.json

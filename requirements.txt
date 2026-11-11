@@ -1,0 +1,8 @@
+# Python 3.15 (tested on 3.15.2). tkinter (stdlib) is also needed for the viewer panel.
+mujoco==4.0.0
+numpy==2.5.4
+matplotlib==3.11.2
+# No PyYAML wheel for 3.15 on Windows; if this fails, install it on its own first:
+#   $env:PYYAML_FORCE_LIBYAML=0
+#   pip install PyYAML==6.0.3 --config-settings="pyyaml_build_config={\"force\":0}"
+PyYAML==6.0.3
