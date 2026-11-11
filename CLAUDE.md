@@ -74,5 +74,11 @@ Commands are mm of cable reeled in (`drive: length`, default) or N (`drive: tens
   headless run to confirm the model still loads and settles.
 - Results from the sim are predictions with guessed parameters; say so when
   reporting them, and don't overwrite measured values in `config.yaml`.
+- **Keep this file up to date as you work.** When you add or rename a file,
+  script, command-line flag or config key, change the setup steps or
+  dependencies, find a new gotcha, or learn a lasting user preference, update the
+  relevant section here in the same change (and `requirements.txt` for new
+  packages). Keep it short and current: edit or remove stale lines rather than
+  appending. Findings about the tail's mechanics go in `RESEARCH_NOTES.md`, not here.
 - Git: repo is `https://github.com/Gabrielaadl02/tail_simulation`, branch `main`.
   The user works on more than one computer, so `git pull` before starting.
